@@ -1,10 +1,11 @@
 #include "../headers/includes.h"
+#include "../headers/Player.h"
 //#define SDL_MAIN_HANDLED
-int main(){
-    SDL_Init(SDL_INIT_VIDEO);
-    SDL_Window* window = SDL_CreateWindow("Space Invaders", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
+int main(){
+    // I IMPORTED CLASS SO CODE LOOKS OVERALL CLEANER
+    SDLApp app(WINDOW_WIDTH, WINDOW_HEIGHT, "Space Invaders");
+    Player spaceship = Player(32, {WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 10, 10});
     SDL_Event e;
     bool running = true;
 
@@ -15,14 +16,20 @@ int main(){
                 running = false;
             }
         }
+        const Uint8 * keystates = SDL_GetKeyboardState(nullptr);
+        spaceship.update(keystates);
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-        SDL_RenderClear(renderer);
-        SDL_RenderPresent(renderer);
+        SDL_SetRenderDrawColor(app.renderer, 0, 0, 0, 0);
+        
+        SDL_RenderClear(app.renderer);
+
+        spaceship.draw(app.renderer);
+
+        SDL_RenderPresent(app.renderer);
     }
 
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(app.renderer);
+    SDL_DestroyWindow(app.window);
     SDL_Quit();
     
     return 0;
