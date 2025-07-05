@@ -1,5 +1,5 @@
 #include "../headers/includes.h"
-
+//#define SDL_MAIN_HANDLED
 int main(){
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window* window = SDL_CreateWindow("Space Invaders", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
