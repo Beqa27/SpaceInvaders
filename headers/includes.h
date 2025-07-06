@@ -3,6 +3,7 @@
 #define SDL_MAIN_HANDLED
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "SDLApp.h"
 #include "Player.h"
 // VARIABLE DEFINITIONS

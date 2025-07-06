@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdexcept> // Required for std::runtime_error
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 /* _________________________________________
     OK, SO, BASICALLY IF I GET ANY MINOR INITIALIZATION ERROR, I QUIT EVERYTHING.
@@ -15,13 +16,18 @@ public:
     int width, height;
     SDL_Window * window = nullptr;
     SDL_Renderer * renderer = nullptr;
-
+    int IMG_FLAGS = IMG_INIT_PNG | IMG_INIT_WEBP | IMG_INIT_JPG;
     SDLApp(int windowWidth, int windowHeight, const char *title)
         : width(windowWidth), height(windowHeight)
     {
         if (SDL_Init(SDL_INIT_VIDEO) < 0) {
             std::cerr << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
             throw std::runtime_error("SDL Initialization Failed");
+        }
+
+        if(IMG_Init(IMG_FLAGS) < 0){
+            std::cerr << "Failed to initialize image" << IMG_GetError() << std::endl;
+            throw std::runtime_error("IMG failed");
         }
 
         window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
