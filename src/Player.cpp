@@ -22,7 +22,7 @@ Player::~Player()
 
 void Player::update(const Uint8 *keystates)
 {
-    move(keystates); // use member version
+    move(keystates);
     checkBorders();
 
     for (auto it = bullets.begin(); it != bullets.end();)

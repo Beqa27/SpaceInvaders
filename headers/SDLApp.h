@@ -1,13 +1,14 @@
 #pragma once
 
 #include <iostream>
-#include <stdexcept> // Required for std::runtime_error
+#include <stdexcept>  //for errors and shii
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-/* _________________________________________
+/* ______________________________________________________________________________
     OK, SO, BASICALLY IF I GET ANY MINOR INITIALIZATION ERROR, I QUIT EVERYTHING.
-    MAKE SURE YALL DO THAT TOO SO WE DONT CAUSE MEMORY LEAKS
+    MAKE SURE YALL DO THAT 
+    _____________________________________________________________________________
 */
 
 class SDLApp

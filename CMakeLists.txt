@@ -25,3 +25,6 @@ target_link_libraries(SpaceInvaders
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
 )
+
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

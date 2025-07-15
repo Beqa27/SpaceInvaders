@@ -23,7 +23,7 @@ int main()
         // UPDATE LOOP
         const Uint8 *keystates = SDL_GetKeyboardState(nullptr);
         spaceship.update(keystates);
-
+        
 
         // DRAW STUFF HERE
         SDL_SetRenderDrawColor(app.renderer, 0, 0, 0, 0);
