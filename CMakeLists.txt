@@ -12,6 +12,7 @@ pkg_check_modules(SDL2_IMAGE REQUIRED SDL2_image)
 add_executable(SpaceInvaders src/main.cpp
     src/Player.cpp
     src/bullet.cpp
+    src/enemy.cpp
 )
 
 # Include directories

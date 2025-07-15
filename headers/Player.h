@@ -11,6 +11,7 @@ public:
     std::vector<Bullet> bullets;
     Uint32 lastShotTime;
     const Uint32 shootCooldown = 300;
+    
 
     Player(SDL_Renderer* renderer, int speed, SDL_Rect rect, const char* texturePath);
     ~Player();

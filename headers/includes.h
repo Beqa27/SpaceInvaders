@@ -6,6 +6,8 @@
 #include <SDL2/SDL_image.h>
 #include "SDLApp.h"
 #include "Player.h"
+#include "enemy.h"
+
 // VARIABLE DEFINITIONS
 
 #define WINDOW_WIDTH 800

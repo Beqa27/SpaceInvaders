@@ -1,5 +1,5 @@
 #include "../headers/includes.h"
-#include "../headers/Player.h"
+
 // #define SDL_MAIN_HANDLED
 
 int main()
@@ -7,6 +7,7 @@ int main()
     // I IMPORTED CLASS SO CODE LOOKS OVERALL CLEANER
     SDLApp app(WINDOW_WIDTH, WINDOW_HEIGHT, "Space Invaders");
     Player spaceship = Player(app.renderer, 6, {WINDOW_WIDTH / 2, WINDOW_HEIGHT -  64, 64, 64}, "assets/ship.png");
+    Enemy alien = Enemy(app.renderer, 10, {WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 32, 32}, "assets/alien.png");
     SDL_Event e;
     bool running = true;
 
@@ -23,6 +24,7 @@ int main()
         // UPDATE LOOP
         const Uint8 *keystates = SDL_GetKeyboardState(nullptr);
         spaceship.update(keystates);
+        alien.update();
         
 
         // DRAW STUFF HERE
@@ -31,6 +33,7 @@ int main()
         SDL_RenderClear(app.renderer);
 
         spaceship.draw(app.renderer);
+        alien.draw(app.renderer);
 
         SDL_RenderPresent(app.renderer);
 
