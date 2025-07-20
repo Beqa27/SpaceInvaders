@@ -1,6 +1,6 @@
 #include "../headers/enemy.h"
 
-Enemy::Enemy(SDL_Renderer * renderer, int speed, SDL_Rect alienRect, const char * enemyPath) : speed(speed), alienRect(alienRect), lastMoveTime(0), moveCooldown(1000) {
+Enemy::Enemy(SDL_Renderer * renderer, int speed, SDL_Rect alienRect, const char * enemyPath) : speed(speed * 2), alienRect(alienRect), lastMoveTime(0), moveCooldown(1000), targetX(static_cast<float>(alienRect.x)), targetY(static_cast<float>(alienRect.y)), moveStartTime(0) {
     enemyTexture = IMG_LoadTexture(renderer, enemyPath);
     if(!enemyTexture){
         std::cerr << "failed to load texture" << std::endl;
@@ -14,29 +14,40 @@ Enemy::~Enemy(){
 }
 void Enemy::update() {
     Uint32 currentTime = SDL_GetTicks();
-    if (currentTime - lastMoveTime > moveCooldown) {
-        // Move horizontally in steps
-        alienRect.x += speed;
 
-        // Check if it hits the wall
-        if (alienRect.x <= 0 || alienRect.x + alienRect.w >= 800) {
-            // Reverse direction
-            speed = -speed;
+    if (currentTime - moveStartTime < moveDuration) {
+        // Interpolate movement
+        float t = static_cast<float>(currentTime - moveStartTime) / moveDuration;
+        alienRect.x = static_cast<int>(alienRect.x + (targetX - alienRect.x) * t);
+        alienRect.y = static_cast<int>(alienRect.y + (targetY - alienRect.y) * t);
+    } else {
+        // Movement complete, set new target
+        alienRect.x = static_cast<int>(targetX);
+        alienRect.y = static_cast<int>(targetY);
 
-            // Move down when hitting wall
-            alienRect.y += 10;
+        if (currentTime - lastMoveTime > moveCooldown) {
+            // Calculate next target position
+            int nextX = alienRect.x + speed;
+            int nextY = alienRect.y;
 
-            // Make sure it doesn't "double move" left/right on next tick
-            alienRect.x += speed; 
+            // Check for wall collision
+            if (nextX <= 0 || nextX + alienRect.w >= WINDOW_WIDTH) {
+                speed = -speed;
+                nextY += 50; // Increased vertical jump
+            }
+            nextX = alienRect.x + speed;
+
+            targetX = static_cast<float>(nextX);
+            targetY = static_cast<float>(nextY);
+            moveStartTime = currentTime;
+            lastMoveTime = currentTime;
         }
-
-        lastMoveTime = currentTime;
     }
 }
-
+//kills the 80s style, but makes the enemy fit more with the new style
 
 void Enemy::draw(SDL_Renderer* renderer) {
     if (enemyTexture) {
-        SDL_RenderCopy(renderer, enemyTexture, NULL, &alienRect);
+        SDL_RenderCopyEx(renderer, enemyTexture, NULL, &alienRect, 0, NULL, SDL_FLIP_VERTICAL);
     }
 }

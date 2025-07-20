@@ -1,6 +1,7 @@
 #include "../headers/Player.h"
 #include <SDL2/SDL_image.h>
 #include <iostream>
+#include "../headers/includes.h"
 
 Player::Player(SDL_Renderer *renderer, int speed, SDL_Rect rect, const char *texturePath)
     : playerRect(rect), speed(speed), lastShotTime(0)
@@ -59,7 +60,7 @@ void Player::shoot()
 void Player::checkBorders()
 {
     if (playerRect.x < 0) playerRect.x = 0;
-    if (playerRect.x + playerRect.w > 800) playerRect.x = 800 - playerRect.w;
+    if (playerRect.x + playerRect.w > WINDOW_WIDTH) playerRect.x = WINDOW_WIDTH - playerRect.w;
 }
 
 void Player::draw(SDL_Renderer *renderer)
